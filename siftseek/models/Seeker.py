@@ -1,7 +1,8 @@
+from datetime import datetime
+
 from .db import db
 from sqlalchemy import String, Integer, DateTime, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
-from datetime import datetime
 
 
 class Seeker(db.Model):
@@ -10,37 +11,39 @@ class Seeker(db.Model):
 
     # Metadata
     id: Mapped[Integer] = mapped_column(Integer, primary_key=True)
-    _created_at: Mapped[DateTime] = mapped_column(
-        DateTime, default=datetime.utc.now, nullable=False
-    )
-    modified_at: Mapped[DateTime] = mapped_column(DateTime, nullable=False)
-    deleted_at: Mapped[DateTime] = mapped_column(DateTime)
+    _created_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow())
+    modified_at: Mapped[DateTime] = mapped_column(DateTime)
+    deleted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
 
     # Personal Info
     username: Mapped[String] = mapped_column(String(15), unique=True)
-    first_name: Mapped[String] = mapped_column(String(255), nullable=False)
-    last_name: Mapped[String] = mapped_column(String(255), nullable=False)
-    contact_email: Mapped[String] = mapped_column(
-        String(255), nullable=False, unique=True
-    )
-    work_phone: Mapped[String] = mapped_column(String(255))
-    work_phone_ext: Mapped[String] = mapped_column(String(255))
-    cell_phone: Mapped[String] = mapped_column(String(255))
-    address: Mapped[String] = mapped_column(String(255))
-    city: Mapped[String] = mapped_column(String(255))
+    first_name: Mapped[String] = mapped_column(String(255))
+    last_name: Mapped[String] = mapped_column(String(255))
+    contact_email: Mapped[String] = mapped_column(String(255), unique=True)
+    work_phone: Mapped[String] = mapped_column(String(255), nullable=True)
+    work_phone_ext: Mapped[String] = mapped_column(String(255), nullable=True)
+    cellphone: Mapped[String] = mapped_column(String(255), nullable=True)
+    address: Mapped[String] = mapped_column(String(255), nullable=True)
+    city: Mapped[String] = mapped_column(String(255), nullable=True)
 
     # URLs
-    resume_url: Mapped[String] = mapped_column(
-        String(2000), default=DEFAULT_PROFILE_PIC_URL, unique=True
+    profile_pic_url: Mapped[String] = mapped_column(
+        String(2000), default=DEFAULT_PROFILE_PIC_URL
     )
-    resume_url: Mapped[String] = mapped_column(String(2000), unique=True)
-    linkedin_url: Mapped[String] = mapped_column(String(2000), unique=True)
-    portfolio_url: Mapped[String] = mapped_column(String(2000), unique=True)
+    resume_url: Mapped[String] = mapped_column(String(2000), nullable=True, unique=True)
+    linkedin_url: Mapped[String] = mapped_column(
+        String(2000), nullable=True, unique=True
+    )
+    portfolio_url: Mapped[String] = mapped_column(
+        String(2000), nullable=True, unique=True
+    )
 
     # Resume Info
-    summary: Mapped[String] = mapped_column(String(10_000))
-    education_level_id: Mapped[Integer] = mapped_column(Integer)
-    remote_option: Mapped[Boolean] = mapped_column(Boolean, default=False)
+    summary: Mapped[String] = mapped_column(String(10_000), nullable=True)
+    education_level_id: Mapped[Integer] = mapped_column(Integer, nullable=True)
+    remote_option: Mapped[Boolean] = mapped_column(
+        Boolean, default=False, nullable=True
+    )
 
     @property
     def created_at(self) -> datetime:
