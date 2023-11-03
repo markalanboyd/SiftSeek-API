@@ -40,8 +40,7 @@ class Seeker(db.Model):
     # Resume Info
     summary: Mapped[String] = mapped_column(String(10_000))
     education_level_id: Mapped[Integer] = mapped_column(Integer)
-    education_years: Mapped[Integer] = mapped_column(Integer(2))
-    remote_option: Mapped[Boolean] = mapped_column()
+    remote_option: Mapped[Boolean] = mapped_column(Boolean, default=False)
 
     @property
     def created_at(self) -> datetime:

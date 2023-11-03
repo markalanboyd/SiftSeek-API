@@ -1,6 +1,6 @@
 from flask import Flask
-from models.db import db
-from models import Seeker
+from .models.db import db
+from .routes import register_blueprints
 
 
 def create_app():
@@ -8,6 +8,8 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///siftseek.db"
 
     db.init_app(app)
+
+    register_blueprints(app)
 
     with app.app_context():
         db.create_all()
