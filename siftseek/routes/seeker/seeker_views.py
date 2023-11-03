@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import request
+from flask import request, jsonify, abort
 
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
@@ -39,6 +39,9 @@ def post_profile():
     return "Added to DB"
 
 
-@seeker.get("/profile")
-def get_profile():
-    return "Seeker profile page"
+@seeker.get("/profile/<int:seeker_id>")
+def get_profile(seeker_id):
+    seeker_profile = Seeker.query.get(seeker_id)
+    if seeker is None:
+        abort(404, description="Profile not found")
+    seeker_data
