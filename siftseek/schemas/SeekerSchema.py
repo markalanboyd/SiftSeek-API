@@ -16,7 +16,13 @@ class SeekerSchema(ma.SQLAlchemyAutoSchema):
         include_fk = True
         include_relationships = True
 
-    metadata_fields = {"id", "_created_at", "modified_at", "deleted_at"}
+    metadata_fields = {
+        "id",
+        "_created_at",
+        "modified_at",
+        "marked_for_deletion",
+        "deleted_at",
+    }
     personal_info_fields = {
         "username",
         "first_name",

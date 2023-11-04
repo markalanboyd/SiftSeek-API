@@ -14,7 +14,10 @@ class Seeker(db.Model):
     # Metadata
     id: Mapped[Integer] = mapped_column(Integer, primary_key=True)
     _created_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow())
-    modified_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow())
+    modified_at: Mapped[DateTime] = mapped_column(
+        DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow()
+    )
+    marked_for_deletion: Mapped[Boolean] = mapped_column(Boolean, default=False)
     deleted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
 
     # Personal Info

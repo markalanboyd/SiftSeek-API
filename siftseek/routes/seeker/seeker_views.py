@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import request, jsonify
 from marshmallow import ValidationError
 
@@ -26,8 +28,8 @@ def post_profile():
 
 @seeker.put("/profile/<int:id>")
 def put_profile(id):
+    existing_profile = Seeker.query.get_or_404(id)
     try:
-        existing_profile = Seeker.query.get_or_404(id)
         updated_profile = seeker_schema.load(
             request.get_json(), instance=existing_profile
         )
@@ -39,8 +41,8 @@ def put_profile(id):
 
 @seeker.patch("/profile/<int:id>")
 def patch_profile(id):
+    existing_profile = Seeker.query.get_or_404(id)
     try:
-        existing_profile = Seeker.query.get_or_404(id)
         updated_profile = seeker_schema.load(
             request.get_json(), instance=existing_profile, partial=True
         )
@@ -48,3 +50,31 @@ def patch_profile(id):
         return seeker_schema.dump(updated_profile), 200
     except ValidationError as e:
         return jsonify(e.messages), 400
+
+
+@seeker.delete("/profile/<int:id>")
+def mark_for_deletion(id):
+    existing_profile = Seeker.query.get_or_404(id)
+    if existing_profile.marked_for_deletion == True:
+        deleted_at = existing_profile.deleted_at
+        return (
+            jsonify(
+                {
+                    "message": f"This account has already been marked for deletion. Deleted at {deleted_at}"
+                }
+            ),
+            409,
+        )
+    try:
+        existing_profile.marked_for_deletion = True
+        existing_profile.deleted_at = datetime.utcnow()
+        db.session.commit()
+        return jsonify({"message": "The account has be marked for deletion."}), 200
+    except ValidationError as e:
+        db.session.rollback()
+        return (
+            jsonify(
+                {"message": "Failed to mark account for deletion", "error": str(e)}
+            ),
+            500,
+        )
