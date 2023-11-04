@@ -1,10 +1,11 @@
-from siftseek.models.seeker import Seeker
 from siftseek.extensions import ma
+from siftseek.models.seeker import Seeker
 
 
 class SeekerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Seeker
+        load_instance = True
         fields = (
             "id",
             "username",

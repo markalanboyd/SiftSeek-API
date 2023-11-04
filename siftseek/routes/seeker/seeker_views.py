@@ -5,6 +5,7 @@ from flask import request, jsonify, abort
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from . import seeker
+from siftseek.schemas.SeekerSchema import SeekerSchema
 
 
 @seeker.post("/profile")
@@ -39,9 +40,8 @@ def post_profile():
     return "Added to DB"
 
 
-@seeker.get("/profile/<int:seeker_id>")
-def get_profile(seeker_id):
-    seeker_profile = Seeker.query.get(seeker_id)
-    if seeker is None:
-        abort(404, description="Profile not found")
-    seeker_data
+@seeker.get("/profile/<int:id>")
+def get_profile(id):
+    seeker_profile = Seeker.query.get_or_404(id)
+    seeker_schema = SeekerSchema()
+    return seeker_schema.jsonify(seeker_profile)
