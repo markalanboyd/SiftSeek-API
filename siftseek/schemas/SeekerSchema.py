@@ -23,7 +23,7 @@ class SeekerSchema(ma.SQLAlchemyAutoSchema):
         include_fk = True
         include_relationships = True
 
-    # Define the fields that will be nested inside personal_info
+    metadata_fields = {"id", "_created_at", "modified_at", "deleted_at"}
     personal_info_fields = {
         "username",
         "first_name",
@@ -35,16 +35,32 @@ class SeekerSchema(ma.SQLAlchemyAutoSchema):
         "address",
         "city",
     }
+    url_fields = {"profile_pic_url", "resume_url", "linkedin_url", "portfolio_url"}
+    resume_info_fields = {"summary", "education_level_id", "remote_option"}
 
-    # We define a method to reformat the data to include the personal_info nesting
+    def __parse_fields(self, data, fields) -> dict:
+        return {key: data.pop(key) for key in list(fields) if key in data}
+
     @post_dump(pass_many=False)
-    def nest_personal_info(self, data, many, **kwargs):
-        personal_info = {
-            key: data.pop(key) for key in self.personal_info_fields if key in data
+    def nest_json(self, data, **kwargs):
+        field_categories = {
+            "metadata": self.metadata_fields,
+            "personal_info": self.personal_info_fields,
+            "urls": self.url_fields,
+            "resume_info": self.resume_info_fields,
         }
-        data["personal_info"] = personal_info
+
+        # Initialize the nested structure
+        nested_data = {}
+        for category, fields in field_categories.items():
+            nested_data[category] = self.__parse_fields(data, fields)
+
+        # Update the data dictionary with the nested data
+        data.update(nested_data)
         return data
 
 
+# Create an instance of the SeekerSchema
 seeker_schema = SeekerSchema()
+
 seekers_schema = SeekerSchema(many=True)
