@@ -27,9 +27,20 @@ def post_profile():
 @seeker.put("/profile/<int:id>")
 def put_profile(id):
     try:
-        existing_profile = Seeker.query.get(id)
-        if not existing_profile:
-            return jsonify({"message": "Profile not found"}), 404
+        existing_profile = Seeker.query.get_or_404(id)
+        updated_profile = seeker_schema.load(
+            request.get_json(), instance=existing_profile
+        )
+        db.session.commit()
+        return seeker_schema.dump(updated_profile), 200
+    except ValidationError as e:
+        return jsonify(e.messages), 400
+
+
+@seeker.patch("/profile/<int:id>")
+def patch_profile(id):
+    try:
+        existing_profile = Seeker.query.get_or_404(id)
         updated_profile = seeker_schema.load(
             request.get_json(), instance=existing_profile, partial=True
         )
