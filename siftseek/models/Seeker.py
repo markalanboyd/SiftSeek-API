@@ -1,8 +1,10 @@
 from datetime import datetime
 
-from .db import db
+
 from sqlalchemy import String, Integer, DateTime, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
+
+from .db import db
 
 
 class Seeker(db.Model):
@@ -12,7 +14,7 @@ class Seeker(db.Model):
     # Metadata
     id: Mapped[Integer] = mapped_column(Integer, primary_key=True)
     _created_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow())
-    modified_at: Mapped[DateTime] = mapped_column(DateTime)
+    modified_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow())
     deleted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
 
     # Personal Info
