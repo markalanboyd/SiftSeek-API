@@ -1,4 +1,5 @@
 from marshmallow import fields, validate, post_dump
+from marshmallow.validate import Length, Email
 
 from siftseek.extensions import ma
 from siftseek.models.seeker import Seeker
@@ -6,6 +7,9 @@ from siftseek.schemas.utils import nest_data
 
 
 class SeekerSchema(ma.SQLAlchemyAutoSchema):
+    username = fields.String(validate=Length(min=1, max=20))
+    contact_email = fields.Email(validate=Email())
+
     class Meta:
         model = Seeker
         load_instance = True
