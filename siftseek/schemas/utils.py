@@ -1,7 +1,8 @@
 from typing import Any, Set
 
-from marshmallow import post_dump
-from marshmallow.validate import Regexp
+from marshmallow import post_dump, ValidationError
+
+import phonenumbers
 
 
 def partition_data_by_fields(data: dict[str, Any], fields: Set[str]) -> dict:
@@ -35,8 +36,10 @@ def nest_data(data: dict[str, Any], field_categories_dict: dict[str, set]) -> di
     return nested_data
 
 
-def validate_phone_number():
-    return Regexp(
-        r"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$",
-        error="Invalid phone number format.",
-    )
+def validate_phone_number(phone_number: str) -> None:
+    try:
+        phone_number_obj = phonenumbers.parse(phone_number, None)
+        if not phonenumbers.is_possible_number(phone_number_obj):
+            raise ValidationError("Invalid phone number format.")
+    except phonenumbers.NumberParseException:
+        raise ValidationError("Invalid phone number format.")
