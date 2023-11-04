@@ -5,7 +5,7 @@ from flask import request, jsonify, abort
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from . import seeker
-from siftseek.schemas.SeekerSchema import SeekerSchema
+from siftseek.schemas.SeekerSchema import seeker_schema
 
 
 @seeker.post("/profile")
@@ -43,5 +43,4 @@ def post_profile():
 @seeker.get("/profile/<int:id>")
 def get_profile(id):
     seeker_profile = Seeker.query.get_or_404(id)
-    seeker_schema = SeekerSchema()
     return seeker_schema.jsonify(seeker_profile)
