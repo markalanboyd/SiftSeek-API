@@ -2,18 +2,7 @@ from marshmallow import fields, validate, post_dump
 
 from siftseek.extensions import ma
 from siftseek.models.seeker import Seeker
-
-
-class PersonalInfoSchema(ma.Schema):
-    username = fields.Str(required=True)
-    first_name = fields.Str(required=True)
-    last_name = fields.Str(required=True)
-    contact_email = fields.Email(required=True)
-    work_phone = fields.Str()
-    work_phone_ext = fields.Str()
-    cellphone = fields.Str()
-    address = fields.Str()
-    city = fields.Str()
+from siftseek.schemas.utils import nest_data
 
 
 class SeekerSchema(ma.SQLAlchemyAutoSchema):
@@ -38,24 +27,16 @@ class SeekerSchema(ma.SQLAlchemyAutoSchema):
     url_fields = {"profile_pic_url", "resume_url", "linkedin_url", "portfolio_url"}
     resume_info_fields = {"summary", "education_level_id", "remote_option"}
 
-    def __parse_fields(self, data, fields) -> dict:
-        return {key: data.pop(key) for key in list(fields) if key in data}
+    field_categories_dict = {
+        "metadata": metadata_fields,
+        "personal_info": personal_info_fields,
+        "urls": url_fields,
+        "resume_info": resume_info_fields,
+    }
 
     @post_dump(pass_many=False)
-    def nest_json(self, data, **kwargs):
-        field_categories = {
-            "metadata": self.metadata_fields,
-            "personal_info": self.personal_info_fields,
-            "urls": self.url_fields,
-            "resume_info": self.resume_info_fields,
-        }
-
-        # Initialize the nested structure
-        nested_data = {}
-        for category, fields in field_categories.items():
-            nested_data[category] = self.__parse_fields(data, fields)
-
-        # Update the data dictionary with the nested data
+    def nest_seeker_data(self, data, many):
+        nested_data = nest_data(data, self.field_categories_dict)
         data.update(nested_data)
         return data
 
