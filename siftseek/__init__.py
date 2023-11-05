@@ -3,12 +3,13 @@ from flask_marshmallow import Marshmallow
 
 from siftseek.logging_config import configure_logging
 from siftseek.models.db import db
-from siftseek.routes import register_blueprints
+from siftseek.endpoints import register_blueprints
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///siftseek.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     configure_logging()
 
