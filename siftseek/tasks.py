@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def cron_delete_marked_seeker_records():
     records_to_delete = Seeker.query.filter(
         Seeker.marked_for_deletion == True,
-        Seeker.deletion_date <= datetime.utcnow() - timedelta(days=30),
+        Seeker.deleted_at <= datetime.utcnow() - timedelta(days=30),
     ).all()
 
     for record in records_to_delete:
