@@ -35,3 +35,5 @@ failing = {
     "education_level_id": 0,  # Fails min value of 1
     "remote_option": "not-a-boolean",  # Fails boolean field check
 }
+
+patch_passing = {"username": "alexsmith2", "work_phone_ext": "100"}

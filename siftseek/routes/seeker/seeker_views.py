@@ -69,7 +69,7 @@ def mark_for_deletion(id):
         existing_profile.marked_for_deletion = True
         existing_profile.deleted_at = datetime.utcnow()
         db.session.commit()
-        return jsonify({"message": "The account has be marked for deletion."}), 200
+        return jsonify({"message": "The account has be marked for deletion."}), 202
     except ValidationError as e:
         db.session.rollback()
         return (
