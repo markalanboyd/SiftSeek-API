@@ -8,15 +8,25 @@ from siftseek.schemas.utils import nest_data, validate_phone_number
 
 class SeekerSchema(ma.SQLAlchemyAutoSchema):
     # Validators
-    length_255_validator = fields.String(validate=Length(min=1, max=255))
-    email_validator = fields.Email(validate=Email(error="Invalid email address."))
-    phone_number_validator = fields.String(validate=validate_phone_number)
-    phone_extension_validator = fields.String(validate=Length(min=1, max=5))
-    url_validator = fields.Url(validate=URL(error="Invalid URL."))
-    id_validator = fields.Integer(
-        validate=Range(min=1, error="Value must be 1 or greater.")
+    length_255_validator = fields.String(
+        validate=Length(min=1, max=255),
+        metadata={"error": "Length must be between 1 and 255 characters."},
     )
-    boolean_validator = fields.Boolean(error="Invalid input for boolean field.")
+    email_validator = fields.Email(
+        validate=Email(), metadata={"error": "Invalid email address."}
+    )
+    phone_number_validator = fields.String(validate=validate_phone_number)
+    phone_extension_validator = fields.String(
+        validate=Length(min=1, max=5),
+        metadata={"error": "Extension must be between 1 and 5 digits."},
+    )
+    url_validator = fields.Url(validate=URL(), metadata={"error": "Invalid URL."})
+    id_validator = fields.Integer(
+        validate=Range(min=1), metadata={"error": "Value must be 1 or greater."}
+    )
+    boolean_validator = fields.Boolean(
+        metadata={"error": "Invalid input for boolean field."}
+    )
 
     username = fields.String(validate=Length(min=1, max=20))
     first_name = length_255_validator
@@ -31,7 +41,7 @@ class SeekerSchema(ma.SQLAlchemyAutoSchema):
     resume_url = url_validator
     linkedin_url = url_validator
     portfolio_url = url_validator
-    summary = fields.String(validate=Length(min=1, max=10_000))
+    summary = fields.String(validate=Length(max=10_000))
     education_level_id = id_validator
     remote_option = boolean_validator
 
