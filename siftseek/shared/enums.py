@@ -1,7 +1,7 @@
-from enum import Enum
+import enum
 
 
-class EducationLevel(Enum):
+class EducationLevel(enum.Enum):
     NO_FORMAL = "No formal education"
     PRIMARY_EDUCATION = "Primary education"
     LOWER_SECONDARY = "Lower secondary education / Junior high school"
