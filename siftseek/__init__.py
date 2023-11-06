@@ -15,9 +15,12 @@ def create_app():
 
     db.init_app(app)
     ma = Marshmallow(app)
-    register_blueprints(app)
 
     with app.app_context():
+        from siftseek.models.seeker import Seeker
+        from siftseek.models.application import Application
+
         db.create_all()
+        register_blueprints(app)
 
     return app

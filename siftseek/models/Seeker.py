@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum
 
 from sqlalchemy import String, Integer, DateTime, Boolean, Enum
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from siftseek.models.db import db
 from siftseek.shared.enums import EducationLevel
@@ -14,9 +14,9 @@ class Seeker(db.Model):
 
     # Metadata
     id: Mapped[Integer] = mapped_column(Integer, primary_key=True)
-    _created_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow())
+    created_at: Mapped[DateTime] = mapped_column(DateTime, default=datetime.utcnow)
     modified_at: Mapped[DateTime] = mapped_column(
-        DateTime, default=datetime.utcnow(), onupdate=datetime.utcnow()
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
     )
     marked_for_deletion: Mapped[Boolean] = mapped_column(Boolean, default=False)
     deleted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
@@ -53,6 +53,5 @@ class Seeker(db.Model):
         Boolean, default=False, nullable=True
     )
 
-    @property
-    def created_at(self) -> datetime:
-        return self._created_at
+    # Relationships
+    # applications = relationship("Application", back_populates="seeker")
