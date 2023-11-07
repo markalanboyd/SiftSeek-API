@@ -9,20 +9,25 @@ def profile_endpoint(test_seeker_profile):
 
 
 @pytest.fixture(scope="function")
-def profile_passing_profile():
+def invalid_profile_endpoint():
+    return f"/seeker/profile/0"
+
+
+@pytest.fixture(scope="function")
+def seeker_passing_profile():
     return seeker_profile_data.passing
 
 
 @pytest.fixture(scope="function")
-def profile_failing_profile():
+def seeker_failing_profile():
     return seeker_profile_data.failing
 
 
 @pytest.fixture(scope="function")
-def profile_passing_patch():
+def seeker_passing_patch():
     return seeker_profile_data.patch_passing
 
 
 @pytest.fixture(scope="function")
-def profile_failing_patch():
+def seeker_failing_patch():
     return seeker_profile_data.patch_failing
