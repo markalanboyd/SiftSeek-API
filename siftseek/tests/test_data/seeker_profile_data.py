@@ -17,4 +17,26 @@ passing = {
     "remote_option": True,
 }
 
-patch_passing = {"username": "alexsmith2", "work_phone_ext": "100"}
+failing = {
+    "username": "this_username_is_way_too_long",
+    "first_name": "",
+    "last_name": "",
+    "contact_email": "notanemail",
+    "work_phone": "12345",
+    "work_phone_ext": "123456",
+    "cellphone": "12345",
+    "address": "",
+    "city": "",
+    "profile_pic_url": "not-a-url",
+    "resume_url": "not-a-url",
+    "linkedin_url": "not-a-url",
+    "portfolio_url": "not-a-url",
+    "summary": "a" * 10001,
+    # Not failing data to get around this warning: RemovedInMarshmallow4Warning: `Field.fail` is deprecated.
+    "education_level": "UPPER_SECONDARY",
+    "remote_option": "yes",
+}
+
+patch_passing = {"username": "alexsmith1", "work_phone": "+385.97.6140.942"}
+
+patch_failing = {"username": "this_username_is_way_too_long", "work_phone": "12345"}

@@ -22,7 +22,7 @@ class Seeker(db.Model):
     deleted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
 
     # Personal Info
-    username: Mapped[String] = mapped_column(String(15), unique=True)
+    username: Mapped[String] = mapped_column(String(20), unique=True)
     first_name: Mapped[String] = mapped_column(String(255))
     last_name: Mapped[String] = mapped_column(String(255))
     contact_email: Mapped[String] = mapped_column(String(255), unique=True)

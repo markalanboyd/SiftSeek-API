@@ -4,6 +4,7 @@ from siftseek import create_app
 from siftseek.models.seeker import Seeker
 from siftseek.models.db import db as db_instance
 from siftseek.tests.test_data import seeker_profile_data
+from siftseek.tests.unit_tests.endpoint_tests.seeker_tests.profile_tests.profile_fixtures import *
 
 
 @pytest.fixture(scope="function")
