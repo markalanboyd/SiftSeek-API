@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 
 from siftseek.models.db import db
 from siftseek.endpoints.seeker import seeker
-from siftseek.schemas.SeekerSchema import seeker_schema
+from siftseek.schemas.seeker_schema import seeker_schema
 
 
 @seeker.post("/profile")

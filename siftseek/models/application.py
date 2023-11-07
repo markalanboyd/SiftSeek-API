@@ -5,13 +5,7 @@ from sqlalchemy import String, Integer, DateTime, Boolean, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from siftseek.models.db import db
-
-
-class Status(enum.Enum):
-    PENDING = "pending"
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    CLOSED = "closed"
+from siftseek.shared.enums import ApplicationStatus
 
 
 class Application(db.Model):
@@ -33,11 +27,13 @@ class Application(db.Model):
 
     # Application Fields
     submitted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
-    status: Mapped[Status] = mapped_column(Enum(Status), nullable=True)
+    status: Mapped[ApplicationStatus] = mapped_column(
+        Enum(ApplicationStatus), nullable=True
+    )
     cover_letter: Mapped[String] = mapped_column(String(10_000), nullable=True)
 
     # Company-Owned Attributes
-    reviewed_by: Mapped[String] = mapped_column(String(20), nullable=True)
+    reviewed_by: Mapped[String] = mapped_column(String(250), nullable=True)
     interview_date: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
     rejection_reason: Mapped[String] = mapped_column(String(250), nullable=True)
     notes: Mapped[String] = mapped_column(String(10_000), nullable=True)

@@ -1,6 +1,13 @@
 import enum
 
 
+class ApplicationStatus(enum.Enum):
+    PENDING = "pending"
+    ACTIVE = "active"
+    INACTIVE = "inactive"
+    CLOSED = "closed"
+
+
 class EducationLevel(enum.Enum):
     NO_FORMAL = "No formal education"
     PRIMARY_EDUCATION = "Primary education"
