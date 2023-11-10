@@ -5,7 +5,6 @@ from sqlalchemy import String, Integer, DateTime, Boolean, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from siftseek.models.db import db
-from siftseek.shared.enums import EducationLevel
 
 
 class Seeker(db.Model):
@@ -46,9 +45,7 @@ class Seeker(db.Model):
 
     # Resume Info
     summary: Mapped[String] = mapped_column(String(10_000), nullable=True)
-    education_level: Mapped[EducationLevel] = mapped_column(
-        Enum(EducationLevel), nullable=True
-    )
+    education_level: Mapped[String] = mapped_column(String, nullable=True)
     remote_option: Mapped[Boolean] = mapped_column(
         Boolean, default=False, nullable=True
     )

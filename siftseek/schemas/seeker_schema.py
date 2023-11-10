@@ -1,11 +1,9 @@
 from marshmallow import fields, post_dump
-from marshmallow.validate import Length, Email, URL, Range
-from marshmallow_enum import EnumField
+from marshmallow.validate import Length, Email, URL
 
 from siftseek.extensions import ma
 from siftseek.models.seeker import Seeker
 from siftseek.schemas.validators import validate_phone_number
-from siftseek.shared.enums import EducationLevel
 
 
 class SeekerSchema(ma.SQLAlchemyAutoSchema):
@@ -23,7 +21,7 @@ class SeekerSchema(ma.SQLAlchemyAutoSchema):
     linkedin_url = fields.Url(validate=URL())
     portfolio_url = fields.Url(validate=URL())
     summary = fields.String(validate=Length(max=10_000))
-    education_level = EnumField(EducationLevel)
+    education_level = fields.String(validate=Length(max=250))
     remote_option = fields.Boolean()
 
     class Meta:

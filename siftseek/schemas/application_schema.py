@@ -1,11 +1,10 @@
 from marshmallow import fields, post_dump
-from marshmallow.validate import Length, Email, URL, Range
+from marshmallow.validate import Length, Range
 from marshmallow_enum import EnumField
 
 from siftseek.extensions import ma
-from siftseek.models.seeker import Seeker
+from siftseek.models.application import Application
 from siftseek.schemas.validators import validate_phone_number
-from siftseek.shared.enums import ApplicationStatus
 
 
 class ApplicationSchema(ma.SQLAlchemyAutoSchema):
@@ -15,7 +14,7 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
 
     # Application Fields
     submitted_at = fields.DateTime()
-    status = EnumField(ApplicationStatus)
+    status = fields.String(validate=Length(max=250))
     cover_letter = fields.String(validate=Length(max=10_000))
 
     # Company-Owned Attributes
@@ -25,7 +24,7 @@ class ApplicationSchema(ma.SQLAlchemyAutoSchema):
     notes = fields.String(validate=Length(10_000))
 
     class Meta:
-        model = Seeker
+        model = Application
         load_instance = True
         include_fk = True
         include_relationships = True

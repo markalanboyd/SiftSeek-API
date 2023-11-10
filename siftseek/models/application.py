@@ -5,7 +5,6 @@ from sqlalchemy import String, Integer, DateTime, Boolean, Enum, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from siftseek.models.db import db
-from siftseek.shared.enums import ApplicationStatus
 
 
 class Application(db.Model):
@@ -27,9 +26,7 @@ class Application(db.Model):
 
     # Application Fields
     submitted_at: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
-    status: Mapped[ApplicationStatus] = mapped_column(
-        Enum(ApplicationStatus), nullable=True
-    )
+    status: Mapped[String] = mapped_column(String(250), nullable=True)
     cover_letter: Mapped[String] = mapped_column(String(10_000), nullable=True)
 
     # Company-Owned Attributes
