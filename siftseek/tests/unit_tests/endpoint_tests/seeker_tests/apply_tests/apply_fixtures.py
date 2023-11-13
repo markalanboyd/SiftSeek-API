@@ -4,8 +4,8 @@ from siftseek.tests.test_data import application_data
 
 
 @pytest.fixture(scope="function")
-def apply_endpoint():
-    return f"/seeker/apply"
+def apply_endpoint(test_seeker_profile):
+    return f"/seeker/apply/{test_seeker_profile.id}"
 
 
 @pytest.fixture(scope="function")

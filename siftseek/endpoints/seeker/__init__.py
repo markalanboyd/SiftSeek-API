@@ -9,3 +9,4 @@ from .profile import post as profile_post
 from .profile import put as profile_put
 
 from .apply import post as apply_post
+from .apply import get as apply_get
