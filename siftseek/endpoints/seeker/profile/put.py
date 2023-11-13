@@ -4,13 +4,13 @@ from marshmallow import ValidationError
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import get_or_abort
+from siftseek.endpoints.helpers.query_helpers import get_model_by_id_or_abort
 from siftseek.schemas.seeker_schema import seeker_schema
 
 
 @seeker.put("/profile/<int:id>")
 def put_profile(id):
-    existing_profile = get_or_abort(Seeker, id)
+    existing_profile = get_model_by_id_or_abort(Seeker, id)
     try:
         updated_profile = seeker_schema.load(
             request.get_json(), instance=existing_profile

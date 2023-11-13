@@ -6,12 +6,12 @@ from marshmallow import ValidationError
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import get_or_abort
+from siftseek.endpoints.helpers.query_helpers import get_model_by_id_or_abort
 
 
 @seeker.delete("/profile/<int:id>")
 def mark_for_deletion(id):
-    existing_profile = get_or_abort(Seeker, id)
+    existing_profile = get_model_by_id_or_abort(Seeker, id)
     if existing_profile.marked_for_deletion == True:
         deleted_at = existing_profile.deleted_at
         return (
