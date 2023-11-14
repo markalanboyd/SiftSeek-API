@@ -1,3 +1,8 @@
+"""
+This seeker_profile_data.py file in the tests.test_data module provides test
+data for the seeker ORM.
+"""
+
 passing = {
     "username": "alexsmith",
     "first_name": "Alex",

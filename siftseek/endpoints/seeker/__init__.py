@@ -1,12 +1,18 @@
+"""
+The siftseek.endpoints.seeker __init__.py file creates the seeker blueprint and
+imports its routes.
+"""
+
 from flask import Blueprint
 
 seeker = Blueprint("seeker", __name__)
 
-from .profile import get as profile_get
-from .profile import delete as profile_delete
-from .profile import patch as profile_patch
-from .profile import post as profile_post
-from .profile import put as profile_put
+from siftseek.endpoints.seeker.profile import (
+    seeker_profile_get,
+    seeker_profile_delete,
+    seeker_profile_patch,
+    seeker_profile_post,
+    seeker_profile_put,
+)
 
-from .apply import post as apply_post
-from .apply import get as apply_get
+from siftseek.endpoints.seeker.apply import seeker_apply_post, seeker_apply_get

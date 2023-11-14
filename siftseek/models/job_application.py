@@ -1,14 +1,30 @@
 from datetime import datetime
-import enum
 
-from sqlalchemy import String, Integer, DateTime, Boolean, Enum, ForeignKey
+from sqlalchemy import String, Integer, DateTime, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from siftseek.models.db import db
 
 
-class Application(db.Model):
-    __tablename__ = "applications"
+class JobApplication(db.Model):
+    """
+    Represents an application made by a job seeker to a job posting in the
+    SiftSeek platform.
+
+    This ORM class is used for storing and retrieving applications from the
+    database. It includes fields that are editable by the job seeker, as well
+    as a select few fields that can only be edited by the company to which
+    the application is made.
+
+    #TODO Add: job_posting_id
+    This should be added when the corresponding functionality and ORM has been
+    created.
+    #TODO Fix: relationship to Seeker
+    The relationship between job_application and seeker is causing an error.
+    Need to investigate why it's not working.
+    """
+
+    __tablename__ = "job_applications"
 
     # Metadata
     id: Mapped[Integer] = mapped_column(Integer, primary_key=True)
@@ -36,4 +52,4 @@ class Application(db.Model):
     notes: Mapped[String] = mapped_column(String(10_000), nullable=True)
 
     # Relationships
-    # seeker = relationship("Seeker", back_populates="applications")
+    # seeker_relationship = relationship("Seeker", back_populates="applications")

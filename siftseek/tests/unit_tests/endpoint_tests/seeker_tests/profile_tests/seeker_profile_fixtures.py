@@ -1,3 +1,7 @@
+"""
+This seeker_profile_fixtures.py file creates pytest fixtures for the seeker/profile endpoint.
+"""
+
 import pytest
 
 from siftseek.tests.test_data import seeker_profile_data

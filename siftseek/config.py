@@ -1,3 +1,8 @@
+"""
+This config.py file holds settings for the app factory in the siftseek.__init__.py file.
+"""
+
+
 class Config(object):
     DEBUG = False
     TESTING = False
@@ -15,4 +20,5 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    # TODO Add: ProductionConfig
     pass

@@ -1,4 +1,4 @@
-from marshmallow import fields, post_dump
+from marshmallow import fields
 from marshmallow.validate import Length, Email, URL
 
 from siftseek.extensions import ma
@@ -6,7 +6,18 @@ from siftseek.models.seeker import Seeker
 from siftseek.schemas.validators import validate_phone_number
 
 
-class SeekerSchema(ma.SQLAlchemyAutoSchema):
+class SeekerSchema(ma.SQLAlchemySchema):
+    """
+    Schema for serializing and deserializing instances of the Seeker model.
+
+    This schema is specifically designed for handling data transformation to and
+    from the SeekerSchema model, facilitating the process of converting JSON
+    data into model instances and vice versa.
+
+    It is built using marshmallow's SQLAlchemySchema, which provides customized
+    serialization and deserialization capabilities.
+    """
+
     username = fields.String(validate=Length(min=1, max=20))
     first_name = fields.String(validate=Length(min=1, max=255))
     last_name = fields.String(validate=Length(min=1, max=255))

@@ -1,6 +1,10 @@
+"""
+This seeker_apply_fixtures.py file creates pytest fixtures for the seeker/apply endpoint.
+"""
+
 import pytest
 
-from siftseek.tests.test_data import application_data
+from siftseek.tests.test_data import job_application_data
 
 
 @pytest.fixture(scope="function")
@@ -15,9 +19,9 @@ def invalid_apply_endpoint():
 
 @pytest.fixture(scope="function")
 def application_data_passing():
-    return application_data.passing
+    return job_application_data.passing
 
 
 @pytest.fixture(scope="function")
 def application_data_failing():
-    return application_data.failing
+    return job_application_data.failing

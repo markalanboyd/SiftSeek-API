@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 
 from siftseek.models.db import db
 from siftseek.endpoints.seeker import seeker
-from siftseek.schemas.application_schema import application_schema
+from siftseek.schemas.job_application_schema import application_schema
 
 
 @seeker.post("/apply/<int:seeker_id>")
