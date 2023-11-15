@@ -25,3 +25,13 @@ def application_data_passing():
 @pytest.fixture(scope="function")
 def application_data_failing():
     return job_application_data.failing
+
+
+@pytest.fixture(scope="function")
+def job_apps_to_delete():
+    return job_application_data.applications_to_delete
+
+
+@pytest.fixture(scope="function")
+def application_put_data_passing():
+    return job_application_data.put_passing

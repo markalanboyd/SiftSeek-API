@@ -12,3 +12,9 @@ failing = {
     "status": "status",
     "cover_letter": "a" * 10_001,
 }
+
+applications_to_delete = "1,2,3,4"
+
+put_passing = {
+    "cover_letter": "New cover letter contents",
+}

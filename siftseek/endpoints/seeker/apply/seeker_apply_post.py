@@ -1,4 +1,4 @@
-from flask import Response, request, jsonify
+from flask import Response, jsonify, request
 from marshmallow import ValidationError
 
 from siftseek.models.db import db
@@ -9,7 +9,7 @@ from siftseek.schemas.job_application_schema import application_schema
 @seeker.post("/apply/<int:seeker_id>")
 def apply_for_job(seeker_id: int) -> tuple[Response, int]:
     """
-    Posts an application for a specific job seeker.
+    Posts a job application for a specific job seeker.
 
     #TODO Add: Connection to job posting
     This route and model does not yet connect with a job posting. Once
@@ -25,7 +25,8 @@ def apply_for_job(seeker_id: int) -> tuple[Response, int]:
             - (int): HTTP status code. 200 if successful, 400 for validation errors.
 
     Raises:
-        ValidationError: If `new_application` fails to validate with the marshmallow schema.
+        ValidationError: If `new_application` fails to validate with the
+            marshmallow schema.
         SQLAlchemyError: If there is an error during the database operation.
     """
     try:

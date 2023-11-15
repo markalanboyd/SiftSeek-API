@@ -1,15 +1,15 @@
 from datetime import datetime
 
-from flask import jsonify
+from flask import Response, jsonify
 
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import get_model_by_pk_or_abort
+from siftseek.endpoints.helpers.query_helpers import get_model_by_pk_or_404
 
 
 @seeker.delete("/profile/<int:seeker_id>")
-def mark_for_deletion(seeker_id: int) -> tuple:
+def mark_for_deletion(seeker_id: int) -> tuple[Response, int]:
     """
     Marks a profile for deletion. Actual deletion is handled by a chron job in
     siftseek.tasks.
@@ -25,11 +25,10 @@ def mark_for_deletion(seeker_id: int) -> tuple:
             been marked for deletion.
 
     Raises:
-        HTTPException: If no instance is found, aborts the request and raises a
-            404 error.
+        HTTPException: If no instance is found, aborts with a 404 error.
         SQLAlchemyError: If there is an error during the database operation.
     """
-    existing_profile = get_model_by_pk_or_abort(db, Seeker, seeker_id)
+    existing_profile = get_model_by_pk_or_404(Seeker, seeker_id)
     if existing_profile.marked_for_deletion == True:
         deleted_at = existing_profile.deleted_at
         return (
