@@ -19,5 +19,4 @@ from siftseek.endpoints.seeker.apply import (
     seeker_application_delete,
     seeker_application_get,
     seeker_application_post,
-    seeker_application_put,
 )
