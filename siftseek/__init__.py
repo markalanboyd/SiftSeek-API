@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_marshmallow import Marshmallow
 
-from siftseek.logging_config import configure_logging
 from siftseek.models.db import db
 from siftseek.endpoints import register_blueprints
 from siftseek.config import DevelopmentConfig, TestingConfig, ProductionConfig
@@ -40,8 +39,6 @@ def create_app(config_name: str) -> Flask:
     }
 
     app.config.from_object(configs[config_name])
-
-    configure_logging()
 
     db.init_app(app)
     register_blueprints(app)
