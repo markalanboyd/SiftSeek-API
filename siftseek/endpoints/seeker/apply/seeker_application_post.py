@@ -6,7 +6,7 @@ from siftseek.endpoints.seeker import seeker
 from siftseek.schemas.job_application_schema import application_schema
 
 
-@seeker.post("/apply/<int:seeker_id>")
+@seeker.post("/application/<int:seeker_id>")
 def apply_for_job(seeker_id: int) -> tuple[Response, int]:
     """
     Posts a job application for a specific job seeker.

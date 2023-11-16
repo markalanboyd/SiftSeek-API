@@ -8,7 +8,7 @@ from siftseek.endpoints.helpers.query_helpers import get_model_by_pk_or_404
 from siftseek.schemas.job_application_schema import application_schema
 
 
-@seeker.put("/apply/<int:seeker_id>")
+@seeker.put("/application/<int:seeker_id>")
 def update_job_application(seeker_id: int) -> tuple[Response, int]:
     """
     Updates a job application for a specific job seeker.

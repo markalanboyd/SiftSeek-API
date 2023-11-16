@@ -7,7 +7,7 @@ from siftseek.endpoints.helpers.query_helpers import (
 from siftseek.models.db import db
 
 
-@seeker.delete("/apply/<int:seeker_id>")
+@seeker.delete("/application/<int:seeker_id>")
 def delete_job_applications(seeker_id: int) -> tuple[Response, int]:
     """
     Deletes one or more job applications by job application id passed as a

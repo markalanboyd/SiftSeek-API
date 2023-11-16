@@ -6,7 +6,7 @@ from siftseek.models.job_application import JobApplication
 from siftseek.schemas.job_application_schema import application_schema
 
 
-@seeker.get("/apply/<int:seeker_id>")
+@seeker.get("/application/<int:seeker_id>")
 def get_all_applications(seeker_id: int) -> tuple[Response, int]:
     """
     Retrieves all the applications for a specific job seeker.
