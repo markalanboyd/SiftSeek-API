@@ -15,7 +15,7 @@ from siftseek.endpoints.seeker.profile import (
     seeker_profile_put,
 )
 
-from siftseek.endpoints.seeker.apply import (
+from siftseek.endpoints.seeker.application import (
     seeker_application_delete,
     seeker_application_get,
     seeker_application_post,
