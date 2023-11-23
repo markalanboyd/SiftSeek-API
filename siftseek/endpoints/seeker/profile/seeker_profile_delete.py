@@ -28,7 +28,7 @@ def mark_for_deletion(seeker_id: int) -> tuple[Response, int]:
         HTTPException: If no instance is found, aborts with a 404 error.
         SQLAlchemyError: If there is an error during the database operation.
     """
-    existing_profile = get_model_by_pk_or_404(Seeker, seeker_id)
+    existing_profile = db.get_or_404(Seeker, seeker_id)
     if existing_profile.marked_for_deletion == True:
         deleted_at = existing_profile.deleted_at
         return (
