@@ -5,10 +5,11 @@ from siftseek.endpoints.helpers.query_helpers import (
     get_filtered_job_apps_by_seeker_id_or_404,
 )
 from siftseek.models.db import db
+from siftseek.models.job_application import JobApplication
 
 
-@seeker.delete("/application/<int:seeker_id>")
-def delete_job_applications(seeker_id: int) -> tuple[Response, int]:
+@seeker.delete("/application/<int:application_id>")
+def delete_job_applications(application_id: int) -> tuple[Response, int]:
     """
     Deletes one or more job applications by job application id passed as a
     query parameter.
@@ -28,17 +29,8 @@ def delete_job_applications(seeker_id: int) -> tuple[Response, int]:
             - If no instances are found, aborts and raises a 404 error.
         SQLAlchemyError: If there is an error during the database operation.
     """
-    job_apps_to_delete_ids = request.args.get("ids")
-    if not job_apps_to_delete_ids:
-        return jsonify(message="No job application IDs provided"), 400
-    try:
-        ids_to_delete = [int(id) for id in job_apps_to_delete_ids.split(",")]
-    except ValueError:
-        return jsonify(message="Invalid job application IDs provided."), 400
-    job_applications = get_filtered_job_apps_by_seeker_id_or_404(
-        seeker_id, ids_to_delete
-    )
-    for job_application in job_applications:
-        db.session.delete(job_application)
+
+    job_application = db.get_or_404(JobApplication, application_id)
+    db.session.delete(job_application)
     db.session.commit()
-    return jsonify(message="Application(s) deleted successfully"), 200
+    return jsonify(message="Application deleted successfully"), 200
