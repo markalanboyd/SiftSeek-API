@@ -9,7 +9,7 @@ from siftseek.tests.test_data import job_application_data
 
 @pytest.fixture(scope="function")
 def apply_endpoint(test_seeker_profile):
-    return f"/seeker/application/{test_seeker_profile.id}"
+    return f"/seeker/application"
 
 
 @pytest.fixture(scope="function")
@@ -28,8 +28,8 @@ def application_data_failing():
 
 
 @pytest.fixture(scope="function")
-def job_apps_to_delete():
-    return job_application_data.applications_to_delete
+def job_app_to_delete():
+    return job_application_data.application_to_delete
 
 
 @pytest.fixture(scope="function")

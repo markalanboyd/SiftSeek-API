@@ -4,7 +4,6 @@ from marshmallow import ValidationError
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import get_model_by_pk_or_404
 from siftseek.schemas.seeker_schema import seeker_schema
 
 
@@ -27,7 +26,7 @@ def put_profile(seeker_id: int) -> tuple[Response, int]:
         ValidationError: If `updated_profile` fails to validate with the marshmallow schema.
         SQLAlchemyError: If there is an error during the database operation.
     """
-    existing_profile = get_model_by_pk_or_404(Seeker, seeker_id)
+    existing_profile = db.get_or_404(Seeker, seeker_id)
     try:
         updated_profile = seeker_schema.load(
             request.get_json(), instance=existing_profile
