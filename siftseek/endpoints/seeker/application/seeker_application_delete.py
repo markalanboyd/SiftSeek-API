@@ -12,7 +12,7 @@ def delete_job_applications(application_id: int) -> tuple[Response, int]:
     query parameter.
 
     Args:
-        seeker_id (int): The primary key ID of the seeker.
+        application_id (int): The primary key ID of the job application.
 
     Returns:
         tuple[Response, int]: A tuple containing:
@@ -21,8 +21,6 @@ def delete_job_applications(application_id: int) -> tuple[Response, int]:
 
     Raises:
         HTTPException:
-            - If no IDs are provided, aborts with a 400 error.
-            - If IDs are malformed, aborts with a 400 error.
             - If no instances are found, aborts and raises a 404 error.
         SQLAlchemyError: If there is an error during the database operation.
     """
