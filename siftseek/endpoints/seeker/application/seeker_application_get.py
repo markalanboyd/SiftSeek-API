@@ -1,13 +1,13 @@
-from flask import Response, jsonify
+from flask import Response, jsonify, abort
 
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import get_job_apps_by_seeker_id_or_404
+from siftseek.models.db import db
 from siftseek.models.job_application import JobApplication
 from siftseek.schemas.job_application_schema import application_schema
 
 
 @seeker.get("/application/<int:seeker_id>")
-def get_all_applications(seeker_id: int) -> tuple[Response, int]:
+def get_all_applications_by_seeker_id(seeker_id: int) -> tuple[Response, int]:
     """
     Retrieves all the applications for a specific job seeker.
 
@@ -27,6 +27,12 @@ def get_all_applications(seeker_id: int) -> tuple[Response, int]:
         HTTPException: If no instances are found, aborts with a 404 error.
         SQLAlchemyError: If there is an error during the database operation.
     """
-    applications = get_job_apps_by_seeker_id_or_404(seeker_id)
+    applications = (
+        db.session.query(JobApplication)
+        .filter(JobApplication.seeker_id == seeker_id)
+        .all()
+    )
+    if not applications:
+        abort(404)
     application_data = application_schema.dump(applications, many=True)
     return jsonify(application_data), 200

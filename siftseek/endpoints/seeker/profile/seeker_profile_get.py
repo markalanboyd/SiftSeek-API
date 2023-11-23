@@ -3,7 +3,6 @@ from flask import Response, jsonify
 from siftseek.models.db import db
 from siftseek.models.seeker import Seeker
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import get_model_by_pk_or_404
 from siftseek.schemas.seeker_schema import seeker_schema
 
 

@@ -1,9 +1,6 @@
-from flask import Response, jsonify, request
+from flask import Response, jsonify
 
 from siftseek.endpoints.seeker import seeker
-from siftseek.endpoints.helpers.query_helpers import (
-    get_filtered_job_apps_by_seeker_id_or_404,
-)
 from siftseek.models.db import db
 from siftseek.models.job_application import JobApplication
 
